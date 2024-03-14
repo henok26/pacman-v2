@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, 50%);
+            position: absolute;
+            align-items: center;
+            justify-content: center;
+            display: flex;
+            flex-direction: column;
+
+        }
+
+        h1 {
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            align-items: center;
+        }
+
+        .countainer {
+            width: 560px;
+            height: 560px;
+            border: 2px solid black;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+
+        .countainer div {
+            width: 20px;
+            height: 20px;
+
+        }
+
+        .wall {
+            background: url(/brik.png);
+        }
+
+        .powerpellet {
+            background-color: green;
+            border-radius: 10px;
+
+
+        }
+
+        .pacmanFood {
+
+            background-color: green;
+
+            box-sizing: border-box;
+            border: 4px solid #fff;
+
+        }
+
+        .army1 {
+
+            background: url(arm.png);
+        }
+
+        .army2 {
+
+            background: url(/arm.png);
+        }
+
+        .army3 {
+
+            background: url(arm.png);
+        }
+
+        .army4 {
+
+            background: url(arm.png);
+        }
+
+        .pacman {
+
+            background: url(brik.png);
+        }
+
+        .notaLLow {
+
+            background-color: #fff;
+        }
+
+        .armyScr {
+            background: url(/src.png);
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Pacman Game</h1>
+    <div class="countainer" id="mainCountainer">
+
+    </div>
+
+    <div class="score">
+
+    </div>
+    <script>
+        let countainer = document.getElementById('mainCountainer');
+        let displayScore = document.getElementById('dispalyScore');
+        let width = 28;
+        let score = 0;
+        const layout = [
+            1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+            1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+            1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1,
+            1, 3, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 3, 1,
+            1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1,
+            1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+            1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1,
+            1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1,
+            1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+            1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1, 1, 0, 1, 1, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 1, 1, 0, 1, 1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1, 1, 0, 1, 1, 4, 1, 1, 1, 2, 2, 1, 1, 1, 4, 1, 1, 0, 1, 1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1, 1, 0, 1, 1, 4, 1, 2, 2, 2, 2, 2, 2, 1, 4, 1, 1, 0, 1, 1, 1, 1, 1, 1,
+            4, 4, 4, 4, 4, 4, 0, 0, 0, 4, 1, 2, 2, 2, 2, 2, 2, 1, 4, 0, 0, 0, 4, 4, 4, 4, 4, 4,
+            1, 1, 1, 1, 1, 1, 0, 1, 1, 4, 1, 2, 2, 2, 2, 2, 2, 1, 4, 1, 1, 0, 1, 1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1, 1, 0, 1, 1, 4, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 0, 1, 1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1, 1, 0, 1, 1, 4, 1, 1, 1, 1, 1, 1, 1, 1, 4, 1, 1, 0, 1, 1, 1, 1, 1, 1,
+            1, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+            1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1,
+            1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1,
+            1, 3, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 3, 1,
+            1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1,
+            1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 1,
+            1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1,
+            1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1,
+            1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1,
+            1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1,
+            1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
+        ]
+        const squares = [];
+        //CreateBoard 
+        function createBoard() {
+            for (let i = 0; i < layout.length; i++) {
+                let square = document.createElement('div');
+
+                countainer.appendChild(square);
+                squares.push(square)
+                if (layout[i] === 0) {
+                    squares[i].classList.add('pacmanFood')
+
+
+                }
+                else if (layout[i] === 1) {
+
+                    squares[i].classList.add('wall');
+                } else if (layout[i] === 2) {
+                    squares[i].classList.add('notallow')
+
+                } else if (layout[i] === 3) {
+
+                    squares[i].classList.add('powerpellet')
+                }}}
+
+
+            
+
+        createBoard();
+        let pacmanCurrentIndex=490;
+        squares[pacmanCurrentIndex].classList.add('pacman')
+//to move the pacman
+function movePacman(e){
+  
+    squares[pacmanCurrentIndex].classList.remove('pacman')
+switch(e.keyCode){
+case 37:
+    if(pacmanCurrentIndex%width!==0){
+pacmanCurrentIndex-=1;
+break;
+
+    }
+    squares[pacmanCurrentIndex].classList.add('pacman')
+
+}
+
+}
+document.addEventListener('keyup',movePacman)
+    </script>
+
+
+</body>
+
+</html>
