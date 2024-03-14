@@ -37,7 +37,7 @@
             display: flex;
             flex-wrap: wrap;
         }
-        
+
 
         .countainer div {
             width: 20px;
@@ -46,8 +46,11 @@
         }
 
         .wall {
-            background: url(/brik.png);
-        }
+        width: 20px;
+        height: 20px;
+ background: url(/brik.png);
+        /* Add other necessary styles */
+    }
 
         .powerpellet {
             background-color: green;
@@ -59,44 +62,44 @@
         .pacmanFood {
 
             background-color: green;
-
-            box-sizing: border-box;
             border: 4px solid #fff;
+            box-sizing: border-box;
+         
 
         }
 
         .army1 {
 
-            background: url(arm.png);
+            background: url(/arm3.png);
         }
 
         .army2 {
 
-            background: url(/arm.png);
+            background: url(/arm3.png);
         }
 
         .army3 {
 
-            background: url(arm.png);
+            background: url(/arm3.png);
         }
 
         .army4 {
 
-            background: url(arm.png);
+            background: url(arm3.png);
         }
 
         .pacman {
 
-            background: url(brik.png);
+            background: url(/pacman.png);
         }
 
-        .notaLLow {
+        .notallow {
 
             background-color: #fff;
         }
 
         .armyScr {
-            background: url(/src.png);
+            background: url(/brik.png);
         }
     </style>
 </head>
@@ -112,6 +115,7 @@
 
     </div>
     <script>
+        
         let countainer = document.getElementById('mainCountainer');
         let displayScore = document.getElementById('dispalyScore');
         let width = 28;
