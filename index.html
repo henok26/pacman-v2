@@ -28,6 +28,7 @@
         h1 {
             font-family: Georgia, 'Times New Roman', Times, serif;
             align-items: center;
+            color: forestgreen
         }
 
         .countainer {
@@ -108,7 +109,7 @@
 
 <body>
 
-    <h1>Pacman Game</h1>
+    <h1>መሰውር</h1>
     <div class="countainer" id="mainCountainer">
 
     </div>
@@ -193,24 +194,29 @@
                     //removing packman class 
 
                     // N.B We may use this logic to hide the player
-                    if (pacmanCurrentIndex % width !== 0)
-                        // N.B We may use this logic to hide the player
+                    if (pacmanCurrentIndex % width !== 0 && !squares[pacmanCurrentIndex - 1].classList.contains('wall') && !squares[pacmanCurrentIndex - 1].classList.contains('notallow'))
                         pacmanCurrentIndex -= 1;
+                    // N.B We may use this logic to hide the player
+                    pacmanCurrentIndex -= 1;
                     break;
-                    //case to move top
+                //case to move top
                 case 38:
                     if (pacmanCurrentIndex - width >= 0)
                         pacmanCurrentIndex -= width;
                     break;
-                    //case to move right
-                    case 39:
-                        if(pacmanCurrentIndex % width < width -1)
-                        pacmanCurrentIndex+=1;
+                //case to move right & restrict movent beyond left boundary
+                case 39:
+                    if (pacmanCurrentIndex % width < width - 1 )
+                        pacmanCurrentIndex += 1;
                     break;
+
+                case 40:
+                    if (pacmanCurrentIndex + width < width * width)
+                        pacmanCurrentIndex += width
             }
-        
-        //re assigning the class again
-        squares[pacmanCurrentIndex].classList.add('pacman')
+
+            //re assigning the class again
+            squares[pacmanCurrentIndex].classList.add('pacman')
 
 
         }
