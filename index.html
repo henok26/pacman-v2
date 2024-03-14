@@ -46,12 +46,12 @@
         }
 
         .wall {
-        width: 20px;
-        height: 20px;
-        background-color: bisque;
- /* background: url(/brik.png); */
-        /* Add other necessary styles */
-    }
+            width: 20px;
+            height: 20px;
+            background-color: bisque;
+            /* background: url(/brik.png); */
+            /* Add other necessary styles */
+        }
 
         .powerpellet {
             background-color: green;
@@ -65,7 +65,7 @@
             background-color: green;
             border: 4px solid #fff;
             box-sizing: border-box;
-         
+
 
         }
 
@@ -174,32 +174,48 @@
                 } else if (layout[i] === 3) {
 
                     squares[i].classList.add('powerpellet')
-                }}}
+                }
+            }
+        }
 
 
-            
+
 
         createBoard();
-        let pacmanCurrentIndex=490;
+        let pacmanCurrentIndex = 490;
         squares[pacmanCurrentIndex].classList.add('pacman');
-//to move the pacman
-function movePacman(e){
-  
-    squares[pacmanCurrentIndex].classList.remove('pacman')
-switch(e.keyCode){
-case 37:
-    if(pacmanCurrentIndex % width !==0){
-pacmanCurrentIndex-=1;
-break;
-    }
-}
-    //re assigning the class again
-    squares[pacmanCurrentIndex].classList.add('pacman')
+        //to move the pacman
+        function movePacman(e) {
 
-}
+            squares[pacmanCurrentIndex].classList.remove('pacman')
+            switch (e.keyCode) {
+                case 37:
+                    //removing packman class 
+
+                    // N.B We may use this logic to hide the player
+                    if (pacmanCurrentIndex % width !== 0)
+                        // N.B We may use this logic to hide the player
+                        pacmanCurrentIndex -= 1;
+                    break;
+                    //case to move top
+                case 38:
+                    if (pacmanCurrentIndex - width >= 0)
+                        pacmanCurrentIndex -= width;
+                    break;
+                    //case to move right
+                    case 39:
+                        if(pacmanCurrentIndex % width < width -1)
+                        pacmanCurrentIndex+=1;
+                    break;
+            }
+        
+        //re assigning the class again
+        squares[pacmanCurrentIndex].classList.add('pacman')
 
 
-document.addEventListener('keyup',movePacman)
+        }
+
+        document.addEventListener('keyup', movePacman)
     </script>
 
 
