@@ -181,23 +181,24 @@
 
         createBoard();
         let pacmanCurrentIndex=490;
-        squares[pacmanCurrentIndex].classList.add('pacman')
+        squares[pacmanCurrentIndex].classList.add('pacman');
 //to move the pacman
 function movePacman(e){
   
     squares[pacmanCurrentIndex].classList.remove('pacman')
 switch(e.keyCode){
 case 37:
-    if(pacmanCurrentIndex%width!==0){
+    if(pacmanCurrentIndex % width !==0){
 pacmanCurrentIndex-=1;
 break;
-
     }
+}
+    //re assigning the class again
     squares[pacmanCurrentIndex].classList.add('pacman')
 
 }
 
-}
+
 document.addEventListener('keyup',movePacman)
     </script>
 
